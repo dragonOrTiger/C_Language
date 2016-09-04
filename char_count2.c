@@ -1,16 +1,15 @@
 /*************************************************************************
-    > File Name: copy_2nd.c
-    > Author: syj
+    > File Name: char_count2.c
+    > Author: shiyongjie
     > Mail: shiyongjie@neusoft.com 
-    > Created Time: 2016年09月02日 星期五 16时52分48秒
+    > Created Time: 2016年09月03日 星期六 21时36分21秒
  ************************************************************************/
 
 #include<stdio.h>
-int main(void)
-{
-	int c;
-	while((c=getchar()) != EOF){
-		putchar(c);
-	}
+int main(void){
+	double nc;
+	for(nc = 0; getchar() != EOF; ++nc)
+		;
+	printf("%.0f\n",nc);
 	return 0;
 }

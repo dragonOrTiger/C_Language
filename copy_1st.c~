@@ -22,5 +22,4 @@ int main(void)
 	putchar(d);
 	printf("\n");
 	printf("%c\t%c\t%c\t%c\n", a, b, c, d);
-	return 0;
 }
