@@ -16,11 +16,8 @@ int main(void){
 }
 int power(int m, int n){
 	int result=1;
-	int i;
-	if(n != 0){
-		for(i=1; i<=n; i++){
-			result = result * m;
-		}
+	for(; n>0; n--){
+		result = result * m;
 	}
 	return result;
 }
