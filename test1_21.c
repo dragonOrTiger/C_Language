@@ -10,16 +10,34 @@
 #define OUT 0
 #define IN 1
 int main(void){
-	int c, pos;
+	int c, i, state, pos, start;
 	pos = 0;
+	state = OUT;
 	while((c=getchar()) != EOF){
 		if(c == '\n'){
-			pos = 0;
 			putchar(c);
-		}
-		if(c == ' '){
+			pos = 0;
 			state = OUT;
-		}else if
+		}else if(c == ' '){
+			if(state == IN){
+				state = OUT;
+				start = pos;
+			}
+			pos++;
+		}else if(c != ' '){
+			if(state == OUT){
+				while((start/TAB+1)*TAB <= pos){
+					putchar('\t');
+					start = (start/TAB+1)*TAB;
+				}
+				for(i=start; i<pos; i++){
+					putchar(' ');
+				}
+				state = IN;
+			}
+			putchar(c);
+			pos++;
+		}
 	}
 	return 0;
 }
