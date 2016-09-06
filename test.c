@@ -7,10 +7,8 @@
 
 #include<stdio.h>
 int main(void){
-	int a = 2.3;
-	printf("%d",a);
-	printf("%d\n", 8/(-3));
-	printf("%d\n", -8/3);
-	printf("%d\n", (-8)/(-3));
+	int i = 1;
+	int j = 2;
+	 (i+j)++;
 	return 0;
 }
