@@ -13,3 +13,21 @@ int main(void){
 
 	return 0;
 }
+void getline2(char line[]){
+	int c, i;
+	int pos;
+	pos = 0;
+	while((c=getchar()) != EOF){
+		if(c == '\n'){
+			pos = 0;
+		}else if(c == '\t'){
+			for(i=pos; i<=(pos/TAB+1)*TAB && i<=N-2; i++){
+				line[pos] = ' ';
+				pos++;
+			}
+		}else{
+			line[pos] = c;
+			pos++;
+		}
+	}
+}
