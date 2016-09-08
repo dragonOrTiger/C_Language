@@ -6,6 +6,7 @@
  ************************************************************************/
 
 #include<stdio.h>
+#include<limits.h>
 #define MAX 12
 void itoa(int n, char s[]);
 int main(void){
@@ -18,13 +19,24 @@ int main(void){
 void itoa(int n, char s[]){
 	int i, sign;
 	i = 0;
-	if((sign=n)<0){
-		n = -n;
+	if(n == INT_MIN){
+		sign = n;
+		n = -n-1;
+		s[i++] = n % 10 + '0' + 1;
+		do{
+			s[i++] = n % 10 + '0';
+		}while((n/=10)>0);
 	}
-	do{
-		s[i++] = n % 10 + '0';
-	}while((n/=10)>0);
+	else{
+			if((sign=n)<0){
+				n = -n;
+			}
+			do{
+				s[i++] = n % 10 + '0';
+			}while((n/=10)>0);
+	}
 	if(sign < 0){
-		s[i++] = '\0';
+		s[i++] = '-';
 	}
+	s[i] = '\0';
 }
