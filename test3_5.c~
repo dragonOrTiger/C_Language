@@ -1,9 +1,10 @@
 /*************************************************************************
-    > File Name: test3_4.c
-    > Author: shiyongjie
+    > File Name: test3_5.c
+    > Author: syj
     > Mail: shiyongjie@neusoft.com 
-    > Created Time: 2016-09-08 22:48:00
+    > Created Time: 2016-09-09 16:13:05
  ************************************************************************/
+
 
 #include<stdio.h>
 #include<limits.h>
@@ -19,7 +20,7 @@ int main(void){
 	printf("%s\n",s);
 	return 0;
 }
-void itoa(int n, char s[]){
+void itob(int n ,char s[], int b){
 	int i, sign;
 	i = 0;
 	if(n == INT_MIN){
@@ -31,12 +32,12 @@ void itoa(int n, char s[]){
 		}while((n/=10)>0);
 	}
 	else{
-			if((sign=n)<0){
-				n = -n;
-			}
-			do{
-				s[i++] = n % 10 + '0';
-			}while((n/=10)>0);
+		if((sign=n)<0){
+			n = -n;
+		}
+		do{
+			s[i++] = n % 10 + '0';
+		}while((n/=10)>0);
 	}
 	if(sign < 0){
 		s[i++] = '-';

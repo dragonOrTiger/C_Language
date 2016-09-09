@@ -1,43 +1,35 @@
 /*************************************************************************
-    > File Name: test3_4.c
-    > Author: shiyongjie
+    > File Name: test3_5.c
+    > Author: syj
     > Mail: shiyongjie@neusoft.com 
-    > Created Time: 2016-09-08 22:48:00
+    > Created Time: 2016-09-09 16:13:05
  ************************************************************************/
+
 
 #include<stdio.h>
 #include<limits.h>
 #include<string.h>
 #define MAX 12
-void itoa(int n, char s[]);
+void itob(int n, char s[], int b);
 void reverse(char s[]);
 int main(void){
-	int n = -2147483647;
+	int n = 2147483647;
+	int b = 16;
 	char s[MAX];
-	itoa(n,s);
+	itob(n,s,b);
 	reverse(s);
 	printf("%s\n",s);
 	return 0;
 }
-void itoa(int n, char s[]){
+void itob(int n ,char s[], int b){
 	int i, sign;
 	i = 0;
-	if(n == INT_MIN){
-		sign = n;
-		n = -n-1;
-		s[i++] = n % 10 + '0' + 1;
-		do{
-			s[i++] = n % 10 + '0';
-		}while((n/=10)>0);
+	if((sign=n)<0){
+		n = -n;
 	}
-	else{
-			if((sign=n)<0){
-				n = -n;
-			}
-			do{
-				s[i++] = n % 10 + '0';
-			}while((n/=10)>0);
-	}
+	do{
+		s[i++] = (n%b<9) ? (n%b+'0') : (n%b-10+'A');
+	}while((n/=b)>0);
 	if(sign < 0){
 		s[i++] = '-';
 	}
