@@ -1,55 +1,52 @@
 /*************************************************************************
-    > File Name: test3_5.c
-    > Author: syj
+    > File Name: test3_6.c
+    > Author: shiyongjie
     > Mail: shiyongjie@neusoft.com 
-    > Created Time: 2016-09-09 16:13:05
+    > Created Time: 2016-09-10 17:14:26
  ************************************************************************/
-
 
 #include<stdio.h>
 #include<limits.h>
-#include<string.h>
-#define MAX 50
-void itob(int n, char s[], int b);
+#define MAX 11
+void itoa(int n, char s[], int width);
 void reverse(char s[]);
-int main(void){
+int main(){
 	int n = -2147483648;
-	int b = 16;
-	char s[MAX];
-	itob(n,s,b);
+	char s[MAX+1];
+	itoa(n,s,MAX);
 	reverse(s);
 	printf("%s\n",s);
 	return 0;
 }
-void itob(int n ,char s[], int b){
+void itoa(int n, char s[], int max){
 	int i, sign;
 	i = 0;
 	if(n == INT_MIN){
 		sign = n;
 		n = -(n+1);
-		if(n%b == b-1){
-			s[i++] = '0';
-			n=n/b+1;
-		}
+		s[i++] = n % 10 + 1 + '0';
 		do{
-			s[i++] = (n%b<9) ? (n%b+'0') : (n%b-10+'A');
-		}while((n/=b)>0);
+			s[i++] = n % 10 + '0';
+		}while(n/=10);
 	}else{
-		if((sign=n)<0){
+		if((sign=n) < 0){
 			n = -n;
 		}
 		do{
-			s[i++] = (n%b<9) ? (n%b+'0') : (n%b-10+'A');
-		}while((n/=b)>0);
+			s[i++] = n % 10 + '0';
+		}while(n/=10);
 	}
 	if(sign < 0){
 		s[i++] = '-';
 	}
-	s[i] = '\0';
+	while(i <= max){
+		s[i++] = ' ';
+	}
+	s[i++] = '\0';
 }
 void reverse(char s[]){
-	int i,j,temp;
-	for(i=0,j=strlen(s)-1;i<j;i++,j--){
+	int i, j, temp;
+	for(i=0,j=MAX; i<j; i++,j--){
 		temp = s[i];
 		s[i] = s[j];
 		s[j] = temp;
