@@ -10,29 +10,21 @@
 #include<ctype.h>
 #include<math.h>
 #define NUMBER '0'
+#define BUFSIZE 100
 #define MAXVAL 100
 #define MAXOP 100
-#define MAXLINE 100
-int getop(char [], char []);
+int getop(char []);
 void push(double);
 double pop(void);
 double val[MAXVAL];
-int getline2(char [], int);
 int sp = 0;
-int li = 0;
 int main(void){
 	int type;
 	double op2;
 	char s[MAXOP];
-	char line[MAXLINE];
-	getline2(line,MAXLINE);
-	//printf("%s\n",line);
-	while((type=getop(s,line)) != EOF){
-		//printf("%d\n",type);
-		//printf("%s\n",s);
+	while((type=getop(s)) != EOF){
 		switch(type){
 			case NUMBER:
-				//printf("%f\n",atof(s));
 				push(atof(s));
 				break;
 			case '+':
@@ -69,41 +61,41 @@ int main(void){
 	}
 	return 0;
 }
-int getline2(char line[], int limit){
+int getop(char s[]){
+	static char buf[BUFSIZE];
+	static int bufp = 0;
 	int i, c;
-	for(i=0; i<limit && (c=getchar())!=EOF && c!='\n';++i){
-		line[i] = c;
-	}
-	if(c=='\n'){
-		line[i] = c;
-		++i;
-	}
-	line[i] = '\0';
-	return i;
-}
-int getop(char s[], char line[]){
-	int j=0, c, len;
-	if(line[li]=='\0')
-		if((len=getline2(line,MAXLINE))==0)
-			return EOF;
-		else
-			li = 0;
-	while((s[0]=c=line[li++])==' ' || c=='\t')
+	while((s[0]=c=(bufp>0?buf[--bufp]:getchar()))==' ' || c=='\t')
 		;
 	s[1] = '\0';
-	j = 0;
 	if(!isdigit(c) && c!='.')
 		return c;
+	i = 0;
 	if(isdigit(c))
-		while(isdigit(s[++j]=c=line[li++]))
+		while(isdigit(s[++i]=c=(bufp>0?buf[--bufp]:getchar())))
 			;
 	if(c == '.')
-		while(isdigit(s[++j]=c=line[li++]))
+		while(isdigit(s[++i]=c=(bufp>0?buf[--bufp]:getchar())))
 			;
-	s[j] = '\0';
-	--li;
+	s[i] = '\0';
+	if(c != EOF)
+		if(bufp >= BUFSIZE)
+			printf("too many characters\n");
+		else
+			buf[bufp++] = c;
 	return NUMBER;
 }
+/*
+int getch(void){
+	return bufp>0?buf[--bufp]:getchar();
+}
+void ungetch(int c){
+	if(bufp >= BUFSIZE)
+		printf("ungetch: too many characters\n");
+	else
+		buf[bufp++] = c;
+}
+*/
 void push(double f){
 	if(sp<MAXVAL)
 		val[sp++] = f;
