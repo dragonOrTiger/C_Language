@@ -28,9 +28,9 @@ int day_of_year(int year, int month, int day){
 	int leap, i;
 	leap = year%4==0 && year%100!=0 || year%400==0;
 	if(month > 12)
-		return;
-	if(day > *(*(daytab+leap)+i))
-		return;
+		return -1;
+	if(day > *(*(daytab+leap)+month))
+		return -1;
 	for(i=1; i<month; i++){
 		day += *(*(daytab+leap)+i);
 	}
