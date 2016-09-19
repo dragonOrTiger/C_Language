@@ -6,15 +6,17 @@
  ************************************************************************/
 
 #include<stdio.h>
-#include<stdlib.h>
 #include<string.h>
 #define MAXLEN 1000
 #define MAXLINES 5000
+#define ALLOCSIZE 10000
+static char allocbuf[ALLOCSIZE];
+static char *allocp = allocbuf;
 int getline2(char line[], int maxlen);
 int readlines(char *lineptr[], int maxlines);
-void strcpy2(char *p, char line[]);
 void writelines(char *lineptr[], int nlines);
 void qsort2(char *lineptr[], int left, int right);
+char *alloc(int n);
 int main(void){
 	char *lineptr[MAXLINES];
 	int nlines;
@@ -37,6 +39,7 @@ int getline2(char line[], int maxlen){
 		++i;
 	}
 	line[i] = '\0';
+	//printf("%d\n",i);
 	return i;
 }
 int readlines(char *lineptr[], int maxlines){
@@ -44,21 +47,16 @@ int readlines(char *lineptr[], int maxlines){
 	char line[MAXLEN];
 	char *p;
 	while((len=getline2(line,MAXLEN))>0){
-		if(nlines>=maxlines || (p=malloc(len))==NULL){
+		if(nlines>=maxlines || (p=alloc(len))==NULL){
 			return -1;
 		}else{
 			line[len-1] = '\0';
-			strcpy2(p, line);
+			//printf("%s",line);
+			strcpy(p, line);
 			lineptr[nlines++] = p;
 		}
 	}
 	return nlines;
-}
-void strcpy2(char *p, char line[]){
-	while(*line){
-		*p++ = *line;
-		line++;
-	}
 }
 void writelines(char *lineptr[], int nlines){
 	while(nlines-->0){
@@ -73,14 +71,14 @@ void qsort2(char *lineptr[], int left, int right){
 	int i = left;
 	int j = right;
 	while(i<j){
-		while(i<j && strcmp(lineptr[j],lineptr[i])>=0){
+		while(i<j && strcmp(lineptr[j],temp)>=0){
 			j--;
 		}
 		if(i<j){
 			lineptr[i] = lineptr[j];
 			i++;
 		}
-		while(i<j && strcmp(lineptr[i],lineptr[j])<=0){
+		while(i<j && strcmp(lineptr[i],temp)<=0){
 			i++;
 		}
 		if(i<j){
@@ -91,4 +89,13 @@ void qsort2(char *lineptr[], int left, int right){
 	lineptr[j] = temp;
 	qsort2(lineptr, left, i-1);
 	qsort2(lineptr, i+1, right);
+}
+char *alloc(int n){
+	if(allocbuf+ALLOCSIZE-allocp>=n){
+			allocp += n;
+			return allocp - n;
+	}else{
+
+			return 0;
+		}
 }
