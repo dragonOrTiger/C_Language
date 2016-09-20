@@ -7,14 +7,19 @@
 
 #include<stdio.h>
 #define STACK_SIZE 1000
+#define NUMBER 1
 void push(int num);
 int pop(void);
 static int stack_zone[STACK_SIZE];
 static int stack_top = 0;
-int main(void){
-	push(3);
-	printf("%d\n",pop());
-	pop();
+int main(int argc, char *argv[]){
+	int i;
+	for(i=1; i<argc; i++){
+		printf("%s ", argv[i]);
+		switch(argv[i])
+	}
+	//printf("\n");
+	return 0;
 }
 void push(int num){
 	if(stack_top < STACK_SIZE){
@@ -30,5 +35,8 @@ int pop(void){
 		printf("stack_zone is empty!\n");
 		return 0;
 	}
+}
+int getop(char *s){
+if 
 }
 
