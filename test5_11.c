@@ -8,7 +8,7 @@
 #include<stdio.h>
 #define TAB 8
 #define SIZE 1000
-int main(void){
+int main(int argc, char *argv[]){
 	char str[] = "hello\tworld";
 	char to[SIZE];
 	printf("%s\n",str);
@@ -17,8 +17,10 @@ int main(void){
 	j = 0;
 	while(str[i]!='\0'){
 		if(str[i] == '\t'){
-			for(;j%8!=0;j++){
-				to[j] = ' ';
+			if(argc == 1){
+				for(;j%8!=0;j++){
+					to[j] = ' ';
+				}
 			}
 		}else{
 			to[j] = str[i];
